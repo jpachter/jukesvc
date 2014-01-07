@@ -21,4 +21,12 @@ public class TestJerseyWS {
     	ExerciseDaoImp dao = new ExerciseDaoImp();
     	return dao.addExercise();
     }
+    
+    @GET
+    @Path("/getAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Exercise> test2() {
+    	ExerciseDaoImp dao = new ExerciseDaoImp();
+    	return dao.getExercises();
+    }
 }

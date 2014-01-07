@@ -1,43 +1,37 @@
 package com.jukegym.workoutservice.db.dto;
 
 
-import javax.jdo.annotations.IdGeneratorStrategy;
-import javax.jdo.annotations.Key;
-import javax.jdo.annotations.PersistenceCapable;
-import javax.jdo.annotations.Persistent;
-import javax.jdo.annotations.PrimaryKey;
+import java.util.Date;
+import com.google.appengine.api.datastore.Key;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-
-
-@PersistenceCapable
+@Entity  
 public class Exercise {
-    @PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key key;
+	@Id  
+	@GeneratedValue(strategy = GenerationType.IDENTITY)  
+	private Key id;  
+	   
+	private Date requestTime;  
 
-    @Persistent
-	private String name;
-   
 	public Exercise(){}
-
 	
-	public String getName() {
-		return name;
-	}
-	
-	public Key getKey() {
-		return key;
-	}
-	
-	public void setKey(Key key) {
-		this.key = key;
-	}
-	
-	public void setName(String workoutName) {
-		this.name = workoutName;
+	public Key getId() {
+		return id;
 	}
 
-	
-	
+	public void setId(Key id) {
+		this.id = id;
+	}
+
+	public Date getRequestTime() {
+		return requestTime;
+	}
+
+	public void setRequestTime(Date requestTime) {
+		this.requestTime = requestTime;
+	}
 }
