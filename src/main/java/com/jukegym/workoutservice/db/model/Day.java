@@ -1,4 +1,4 @@
-package com.jukegym.workoutservice;
+package com.jukegym.workoutservice.db.model;
 
 import java.util.Comparator;
 import java.util.HashMap;

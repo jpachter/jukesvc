@@ -1,9 +1,9 @@
-package com.jukegym.workoutservice;
+package com.jukegym.workoutservice.db.model;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum MuscleGroup {
+public enum MuscleGroupEnum {
 	Chest("Chest"),
 	Back("Back"),
 	Arms("Arms"),
@@ -12,21 +12,21 @@ public enum MuscleGroup {
 	Triceps("Triceps"),
 	Calves("Calves");
 	
-    private static final Map<String, MuscleGroup> typesByValue = new HashMap<String, MuscleGroup>();
+    private static final Map<String, MuscleGroupEnum> typesByValue = new HashMap<String, MuscleGroupEnum>();
 
     static {
-        for (MuscleGroup group : MuscleGroup.values()) {
+        for (MuscleGroupEnum group : MuscleGroupEnum.values()) {
             typesByValue.put(group.muscleGroup, group);
         }
     }
 	
 	private String muscleGroup;
 
-	private MuscleGroup(final String muscleGroup) {
+	private MuscleGroupEnum(final String muscleGroup) {
 		this.muscleGroup = muscleGroup;
   }
 	
-    public static MuscleGroup forValue(String value) {
+    public static MuscleGroupEnum forValue(String value) {
         return typesByValue.get(value);
     }
     
