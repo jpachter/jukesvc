@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity  
 @NamedQueries({
@@ -42,6 +43,9 @@ public class Exercise {
 	@Basic
 	@Unowned
 	private Set<Muscle> secondaryMuscles;
+	
+	@Transient
+	private Set<String> error;
 
 	
 	public Exercise(){
@@ -111,6 +115,21 @@ public class Exercise {
 		this.secondaryMuscles = secondaryMuscles;
 	}
 
+	public Set<String> getError() {
+		return error;
+	}
+
+	public void setError(Set<String> error) {
+		this.error = error;
+	}
+	
+	public void addError(String error){
+		if(this.error == null)
+			this.error = new HashSet<String>();
+		this.error.add(error);
+	}
+
+	
 	
 
 }

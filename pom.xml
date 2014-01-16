@@ -7,7 +7,7 @@
 	<artifactId>jukesvc</artifactId>
 	<properties>
 		<appengine.app.version>1</appengine.app.version>
-		<appengine.target.version>1.8.8</appengine.target.version>
+		<appengine.target.version>1.8.9</appengine.target.version>
 		<datanucleus.jpa.version>3.1.1</datanucleus.jpa.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

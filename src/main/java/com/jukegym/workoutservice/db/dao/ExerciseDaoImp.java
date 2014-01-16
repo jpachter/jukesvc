@@ -14,6 +14,7 @@ import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
 public class ExerciseDaoImp {
 	private EntityManager em;
+	private MuscleDaoImp muscleDao;
 	
 	public ExerciseDaoImp(){
 		em = EMF.get().createEntityManager();
@@ -72,15 +73,24 @@ public class ExerciseDaoImp {
 		return result;
 	}
 	
-	public Exercise addMuscleGroupTo(long id, String muscleGroup) throws Exception{		
-		Exercise e = getExerciseById(id);
+	public Exercise addMuscleGroup(long exerciseId, long muscleGroupId) throws Exception{		
+		muscleDao = new MuscleDaoImp();
 		
-		if (e == null)
-			return null;
+		Exercise e = getExerciseById(exerciseId);
+		MuscleGroup mg = muscleDao.getMuscleGroupById(muscleGroupId);
 		
-		MuscleGroup mg = new MuscleGroup();
-		mg.setName(muscleGroup);
-
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(mg == null){
+			e.addError("Error: Unable to find muscle group id #(" + muscleGroupId + ").");
+		}
+		
+		if(e.getError().size() > 0)
+			return e;
+		
 		try {
 			em.getTransaction().begin();  
 			e.addMuscleGroup(mg);

@@ -21,7 +21,7 @@ import com.jukegym.workoutservice.db.dto.Exercise;
 public class ExerciseService {
 
     @POST
-    @Path("/add/exercise")
+    @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addExercise(@FormParam("name") String name){
     	ExerciseDaoImp dao = new ExerciseDaoImp();
@@ -29,17 +29,17 @@ public class ExerciseService {
     	
     }
     
-    @POST
-    @Path("/add/musclegroup/{id}")
+    @GET
+    @Path("/{eid}/add/musclegroup/{mid}")
     @Produces(MediaType.APPLICATION_JSON)
-	public Exercise addMuscleGroup(@FormParam("musclegroup") String muscleGroup,
-			@PathParam("id") String id) throws Exception{
+	public Exercise addMuscleGroup(@PathParam("mid") String muscleGroupId,
+			@PathParam("eid") String exerciseId) throws Exception{
     	ExerciseDaoImp dao = new ExerciseDaoImp();
-    	return dao.addMuscleGroupTo(Long.valueOf(id), muscleGroup);
+    	return dao.addMuscleGroup(Long.valueOf(exerciseId), Long.valueOf(muscleGroupId));
     }
     
     @GET
-    @Path("/get/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Exercise getExerciseById(@PathParam("id") String id){
     	ExerciseDaoImp dao = new ExerciseDaoImp();
@@ -47,7 +47,7 @@ public class ExerciseService {
     }
     
     @GET
-    @Path("/get")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Exercise> getAllExercises() {
     	ExerciseDaoImp dao = new ExerciseDaoImp();

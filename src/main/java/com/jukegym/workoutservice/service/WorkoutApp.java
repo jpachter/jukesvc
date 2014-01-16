@@ -10,6 +10,7 @@ public class WorkoutApp extends Application {
      public Set<Class<?>> getClasses() {
          Set<Class<?>> s = new HashSet<Class<?>>();
          s.add(ExerciseService.class);
+         s.add(MuscleService.class);
          return s;
      }
 }
