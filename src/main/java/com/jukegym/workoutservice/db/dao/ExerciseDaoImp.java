@@ -12,7 +12,7 @@ import com.jukegym.workoutservice.EMF;
 import com.jukegym.workoutservice.db.dto.Exercise;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
-public class ExerciseDaoImp {
+public class ExerciseDaoImp implements ExerciseDaoInterface{
 	private EntityManager em;
 	private MuscleDaoImp muscleDao;
 	
@@ -73,7 +73,7 @@ public class ExerciseDaoImp {
 		return result;
 	}
 	
-	public Exercise addMuscleGroup(long exerciseId, long muscleGroupId) throws Exception{		
+	public Exercise addMuscleGroup(long exerciseId, long muscleGroupId){		
 		muscleDao = new MuscleDaoImp();
 		
 		Exercise e = getExerciseById(exerciseId);
@@ -88,7 +88,7 @@ public class ExerciseDaoImp {
 			e.addError("Error: Unable to find muscle group id #(" + muscleGroupId + ").");
 		}
 		
-		if(e.getError().size() > 0)
+		if(e.getError() != null && e.getError().size() > 0)
 			return e;
 		
 		try {
@@ -125,8 +125,8 @@ public class ExerciseDaoImp {
 		return results;
 	}
 	
-	//public static void deleteExercise(Key key){
+	public void deleteExercise(long id){
 		
-	//}
+	}
 	
 }

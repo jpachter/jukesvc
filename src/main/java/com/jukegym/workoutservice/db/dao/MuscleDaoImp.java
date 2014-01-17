@@ -12,7 +12,7 @@ import com.jukegym.workoutservice.EMF;
 import com.jukegym.workoutservice.db.dto.Exercise;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
-public class MuscleDaoImp {
+public class MuscleDaoImp implements MuscleDaoInterface{
 	private EntityManager em;
 	
 	public MuscleDaoImp(){
@@ -54,10 +54,15 @@ public class MuscleDaoImp {
 		return result;
 	}
 	
-	public MuscleGroup createMuscleGroup(String name) throws Exception{
+	public MuscleGroup createMuscleGroup(String name){
 
 		MuscleGroup mg = new MuscleGroup();
-		mg.setName(name);	
+		try {
+			mg.setName(name);
+		} catch (Exception e) {
+			mg.addError("Invalid muscle group name '" + name + "'.");
+			return mg;
+		}	
 		
 		try {
 			em.getTransaction().begin();
