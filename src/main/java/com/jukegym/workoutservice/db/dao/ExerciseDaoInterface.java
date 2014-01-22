@@ -12,6 +12,8 @@ public interface ExerciseDaoInterface {
 	public Exercise getExerciseByKey(Key key);
 	public Exercise getExerciseById(long id);
 	public Exercise addMuscleGroup(long exerciseId, long muscleGroupId);
+	public Exercise addPrimaryMuscle(long exerciseId, long primaryMuscleId);
+	public Exercise addSecondaryMuscle(long exerciseId, long secondaryMuscleId);
 	public Exercise addExercise(String name);
 	public void deleteExercise(long id);	
 }

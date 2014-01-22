@@ -10,18 +10,18 @@ import javax.persistence.TypedQuery;
 
 import com.jukegym.workoutservice.EMF;
 import com.jukegym.workoutservice.db.dto.Exercise;
+import com.jukegym.workoutservice.db.dto.Muscle;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
 public class ExerciseDaoImp implements ExerciseDaoInterface{
-	private EntityManager em;
 	private MuscleDaoImp muscleDao;
 	
 	public ExerciseDaoImp(){
-		em = EMF.get().createEntityManager();
+		muscleDao = new MuscleDaoImp();
 	}
 
 	public Exercise addExercise(String name){
-
+		EntityManager em = EMF.get().createEntityManager();
 		Exercise e = new Exercise();
 		e.setName(name);	
 		
@@ -74,8 +74,7 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 	}
 	
 	public Exercise addMuscleGroup(long exerciseId, long muscleGroupId){		
-		muscleDao = new MuscleDaoImp();
-		
+		EntityManager em = EMF.get().createEntityManager();
 		Exercise e = getExerciseById(exerciseId);
 		MuscleGroup mg = muscleDao.getMuscleGroupById(muscleGroupId);
 		
@@ -127,6 +126,74 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 	
 	public void deleteExercise(long id){
 		
+	}
+
+	@Override
+	public Exercise addPrimaryMuscle(long exerciseId, long primaryMuscleId) {	
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(exerciseId);
+		Muscle muscle = muscleDao.getMuscleById(primaryMuscleId);
+		
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(muscle == null){
+			e.addError("Error: Unable to find muscle id #(" + primaryMuscleId + ").");
+		}
+		
+		if(e.getError() != null && e.getError().size() > 0)
+			return e;
+		
+		try {
+			em.getTransaction().begin();  
+			e.addPrimaryMuscle(muscle);
+			em.merge(e);
+			em.getTransaction().commit();  
+			return e;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}
+
+	@Override
+	public Exercise addSecondaryMuscle(long exerciseId, long secondaryMuscleId) {
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(exerciseId);
+		Muscle muscle = muscleDao.getMuscleById(secondaryMuscleId);
+		
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(muscle == null){
+			e.addError("Error: Unable to find muscle id #(" + secondaryMuscleId + ").");
+		}
+		
+		if(e.getError() != null && e.getError().size() > 0)
+			return e;
+		
+		try {
+			em.getTransaction().begin();  
+			e.addSecondaryMuscle(muscle);
+			em.merge(e);
+			em.getTransaction().commit();  
+			return e;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
 	}
 	
 }

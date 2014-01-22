@@ -30,12 +30,30 @@ public class ExerciseService {
     }
     
     @GET
-    @Path("/{eid}/add/musclegroup/{mid}")
+    @Path("/{eid}/add/muscle/group/{mid}")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addMuscleGroup(@PathParam("mid") String muscleGroupId,
 			@PathParam("eid") String exerciseId) throws Exception{
     	ExerciseDaoImp dao = new ExerciseDaoImp();
     	return dao.addMuscleGroup(Long.valueOf(exerciseId), Long.valueOf(muscleGroupId));
+    }
+    
+    @GET
+    @Path("/{eid}/add/muscle/primary/{pid}")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Exercise addPrimaryMuscle(@PathParam("pid") String primaryMuscleId,
+			@PathParam("eid") String exerciseId) throws Exception{
+    	ExerciseDaoImp dao = new ExerciseDaoImp();
+    	return dao.addPrimaryMuscle(Long.valueOf(exerciseId), Long.valueOf(primaryMuscleId));
+    }
+    
+    @GET
+    @Path("/{eid}/add/muscle/secondary/{sid}")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Exercise addSecondaryMuscle(@PathParam("sid") String secondaryMuscleId,
+			@PathParam("eid") String exerciseId) throws Exception{
+    	ExerciseDaoImp dao = new ExerciseDaoImp();
+    	return dao.addSecondaryMuscle(Long.valueOf(exerciseId), Long.valueOf(secondaryMuscleId));
     }
     
     @GET

@@ -1,16 +1,26 @@
 package com.jukegym.workoutservice.db.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Transient;
 
 import com.google.appengine.api.datastore.Key;
 import com.jukegym.workoutservice.db.model.MuscleEnum;
 
-@Entity
+@Entity   
+@NamedQueries({
+    @NamedQuery(name="Muscle.findAll",
+                query="SELECT m FROM Muscle m"),
+}) 
 public class Muscle {
 	@Id  
 	@GeneratedValue(strategy = GenerationType.IDENTITY)  
@@ -18,8 +28,8 @@ public class Muscle {
 	
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private Exercise exercise;
+	@Transient
+	Set<String> error;
 	
 	public Muscle(){
 	}
@@ -28,7 +38,7 @@ public class Muscle {
 		return muscleKey;
 	}
 
-	public void setMuscleGroupKey(Key muscleKey) {
+	public void setMuscleKey(Key muscleKey) {
 		this.muscleKey = muscleKey;
 	}
 
@@ -38,20 +48,26 @@ public class Muscle {
 
 	public void setName(String name) throws Exception {
 		if(MuscleEnum.forValue(name) == null){
-			throw new Exception("Invalid Muscle Group '" + name + "'.");
+			throw new Exception("Invalid Muscle '" + name + "'.");
 		}
 		else
 			this.name = name;
+	}	
+
+	public Set<String> getError() {
+		return error;
 	}
 
-	public Exercise getExercise() {
-		return exercise;
+	public void setError(Set<String> error) {
+		this.error = error;
 	}
 
-	public void setExercise(Exercise exercise) {
-		this.exercise = exercise;
-	}
 	
+	public void addError(String error){
+		if(this.error == null)
+			this.error = new HashSet<String>();
+		this.error.add(error);
+	}
 	
 }
 	

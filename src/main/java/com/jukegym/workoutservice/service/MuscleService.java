@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.jukegym.workoutservice.db.dao.ExerciseDaoImp;
 import com.jukegym.workoutservice.db.dao.MuscleDaoImp;
 import com.jukegym.workoutservice.db.dto.Exercise;
+import com.jukegym.workoutservice.db.dto.Muscle;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
 
@@ -30,11 +31,27 @@ public class MuscleService {
     	return dao.getMuscleGroups();
     }
     
+    @GET
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Muscle> getAllMuscles() {
+    	MuscleDaoImp dao = new MuscleDaoImp();
+    	return dao.getMuscles();
+    }
+    
     @POST
     @Path("/groups/add")
     @Produces(MediaType.APPLICATION_JSON)
     public MuscleGroup addMuscleGroup(@FormParam("name") String name) throws Exception {
     	MuscleDaoImp dao = new MuscleDaoImp();
     	return dao.createMuscleGroup(name);
+    }
+    
+    @POST
+    @Path("/add")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Muscle addMuscle(@FormParam("name") String name) throws Exception {
+    	MuscleDaoImp dao = new MuscleDaoImp();
+    	return dao.createMuscle(name);
     }
 }

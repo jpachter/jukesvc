@@ -10,13 +10,13 @@ import javax.persistence.TypedQuery;
 
 import com.jukegym.workoutservice.EMF;
 import com.jukegym.workoutservice.db.dto.Exercise;
+import com.jukegym.workoutservice.db.dto.Muscle;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
 public class MuscleDaoImp implements MuscleDaoInterface{
-	private EntityManager em;
 	
 	public MuscleDaoImp(){
-		em = EMF.get().createEntityManager();
+		
 	}
 
 	public List<MuscleGroup> getMuscleGroups(){
@@ -55,7 +55,7 @@ public class MuscleDaoImp implements MuscleDaoInterface{
 	}
 	
 	public MuscleGroup createMuscleGroup(String name){
-
+		EntityManager em = EMF.get().createEntityManager();
 		MuscleGroup mg = new MuscleGroup();
 		try {
 			mg.setName(name);
@@ -78,5 +78,67 @@ public class MuscleDaoImp implements MuscleDaoInterface{
         	em.close();
         }
 	}
-	
+
+	@Override
+	public List<Muscle> getMuscles() {
+		EntityManager em = EMF.get().createEntityManager();
+		List<Muscle> results = null;
+		
+		try {
+			TypedQuery<Muscle> query =
+				      em.createNamedQuery("Muscle.findAll", Muscle.class);
+			results = query.getResultList();
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+         } finally {
+        	em.close();
+        }
+
+		return results;
+	}
+
+	@Override
+	public Muscle getMuscleById(long id) {
+		EntityManager em = EMF.get().createEntityManager();
+		Muscle result = null;
+		
+		Key key = KeyFactory.createKey(Muscle.class.getSimpleName(), id);
+		try {
+			result = em.find(Muscle.class, key);
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+         } finally {
+        	em.close();
+        }
+
+		return result;
+	}
+
+	@Override
+	public Muscle createMuscle(String name) {
+		EntityManager em = EMF.get().createEntityManager();
+		Muscle muscle = new Muscle();
+		try {
+			muscle.setName(name);
+		} catch (Exception e) {
+			muscle.addError("Invalid muscle name '" + name + "'.");
+			return muscle;
+		}	
+		
+		try {
+			em.getTransaction().begin();
+			em.persist(muscle);  
+			em.getTransaction().commit();  
+			return muscle;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}	
 }
