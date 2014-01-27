@@ -140,5 +140,55 @@ public class MuscleDaoImp implements MuscleDaoInterface{
          } finally {
         	em.close();
         }
+	}
+
+	@Override
+	public Muscle deleteMuscleById(long id) {
+		EntityManager em = EMF.get().createEntityManager();
+		Muscle m = getMuscleById(id);
+
+		if(m == null){
+			m = new Muscle();
+			m.addError("Error: Unable to find muscle id #(" + id + ").");
+			return m;
+		}
+		
+		try {			
+			em.getTransaction().begin();  
+			em.remove(m);
+			em.getTransaction().commit();  
+			return null;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}
+
+	@Override
+	public MuscleGroup deleteMuscleGroupById(long id) {
+		EntityManager em = EMF.get().createEntityManager();
+		MuscleGroup mg = getMuscleGroupById(id);
+
+		if(mg == null){
+			mg = new MuscleGroup();
+			mg.addError("Error: Unable to find muscle group id #(" + id + ").");
+			return mg;
+		}
+		
+		try {			
+			em.getTransaction().begin();  
+			em.remove(mg);
+			em.getTransaction().commit();  
+			return null;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			return null;
+         } finally {
+        	em.close();
+        }
 	}	
 }

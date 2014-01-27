@@ -195,5 +195,153 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
         	em.close();
         }
 	}
+
+	@Override
+	public Exercise deleteExerciseById(long id) {
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(id);
+
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + id + ").");
+			return e;
+		}
+		
+		try {			
+			em.getTransaction().begin();  
+			em.remove(e);
+			em.getTransaction().commit();  
+			return null;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}
+
+	@Override
+	public Exercise removeMuscleGroupFromExercise(long exerciseId, long muscleGroupId){
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(exerciseId);
+		MuscleGroup mg = muscleDao.getMuscleGroupById(muscleGroupId);
+		boolean found = false;
+		
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(mg == null){
+			e.addError("Error: Unable to find muscle group id #(" + muscleGroupId + ").");
+		}
+		
+		if(e.getError() != null && e.getError().size() > 0)
+			return e;
+		
+		try {
+			em.getTransaction().begin();  
+			found = e.removeMuscleGroup(mg);
+			if(found){
+				em.merge(e);
+				em.getTransaction().commit();  
+				return e;
+			}
+			e.addError("Error: Exercise does not contain muscle group id #(" + muscleGroupId + ")." );
+			em.getTransaction().rollback();
+			return e;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
+		
+	}
+
+	@Override
+	public Exercise removePrimaryMuscleFromExercise(long exerciseId, long primaryMuscleId){
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(exerciseId);
+		Muscle muscle = muscleDao.getMuscleById(primaryMuscleId);
+		boolean found = false;
+		
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(muscle == null){
+			e.addError("Error: Unable to find primary muscle id #(" + primaryMuscleId + ").");
+		}
+		
+		if(e.getError() != null && e.getError().size() > 0)
+			return e;
+		
+		try {
+			em.getTransaction().begin();  
+			found = e.removePrimaryMuscle(muscle);
+			if(found){
+				em.merge(e);
+				em.getTransaction().commit();  
+				return e;
+			}
+			e.addError("Error: Exercise does not contain primary muscle id #(" + primaryMuscleId + ")." );
+			em.getTransaction().rollback();
+			return e;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}
+
+	@Override
+	public Exercise removeSecondaryMuscleFromExercise(long exerciseId, long secondaryMuscleId){
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise e = getExerciseById(exerciseId);
+		Muscle muscle = muscleDao.getMuscleById(secondaryMuscleId);
+		boolean found = false;
+		
+		if(e == null){
+			e = new Exercise();
+			e.addError("Error: Unable to find exercise id #(" + exerciseId + ").");
+		}
+		
+		if(muscle == null){
+			e.addError("Error: Unable to find secondary muscle id #(" + secondaryMuscleId + ").");
+		}
+		
+		if(e.getError() != null && e.getError().size() > 0)
+			return e;
+		
+		try {
+			em.getTransaction().begin();  
+			found = e.removeSecondaryMuscle(muscle);
+			if(found){
+				em.merge(e);
+				em.getTransaction().commit();  
+				return e;
+			}
+			e.addError("Error: Exercise does not contain secondary muscle id #(" + secondaryMuscleId + ")." );
+			em.getTransaction().rollback();
+			return e;
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+			em.getTransaction().rollback();
+			return null;
+         } finally {
+        	em.close();
+        }
+	}
+
+
 	
 }

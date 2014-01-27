@@ -51,11 +51,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>  
-  			<groupId>javax.jdo</groupId>  
-  			<artifactId>jdo-api</artifactId>  
-  			<version>3.0.1</version>  
-		</dependency> 
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jpa_2.0_spec</artifactId>
@@ -180,4 +180,24 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>debug</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.appengine</groupId>
+						<artifactId>appengine-maven-plugin</artifactId>
+						<version>${appengine.target.version}</version>
+						<configuration>
+							<jvmFlags>
+								<jvmFlag>-Xdebug</jvmFlag>
+								<jvmFlag>-Xrunjdwp:transport=dt_socket,address=1044,server=y,suspend=n</jvmFlag>
+							</jvmFlags>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

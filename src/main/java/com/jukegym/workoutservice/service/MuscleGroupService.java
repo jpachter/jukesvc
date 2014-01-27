@@ -21,37 +21,37 @@ import com.jukegym.workoutservice.db.dto.Muscle;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
 
-@Path("/muscles")
-public class MuscleService {
-	
+@Path("/musclegroups")
+public class MuscleGroupService {
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Muscle> getAllMuscles() {
+    public List<MuscleGroup> getAllMuscleGroups() {
     	MuscleDaoImp dao = new MuscleDaoImp();
-    	return dao.getMuscles();
+    	return dao.getMuscleGroups();
     }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Muscle addMuscle(@FormParam("name") String name) throws Exception {
+    public MuscleGroup addMuscleGroup(@FormParam("name") String name) throws Exception {
     	MuscleDaoImp dao = new MuscleDaoImp();
-    	return dao.createMuscle(name);
+    	return dao.createMuscleGroup(name);
     }
     
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Muscle getMuscleById(@PathParam("id") String id){
+    public MuscleGroup getMuscleGroupById(@PathParam("id") String id){
     	MuscleDaoImp dao = new MuscleDaoImp();
-    	return dao.getMuscleById(Long.valueOf(id));
+    	return dao.getMuscleGroupById(Long.valueOf(id));
     }
     
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Muscle deleteMuscleById(@PathParam("id") String id){
+    public MuscleGroup deleteMuscleGroupById(@PathParam("id") String id){
     	MuscleDaoImp dao = new MuscleDaoImp();
-    	return dao.deleteMuscleById(Long.valueOf(id));
+    	return dao.deleteMuscleGroupById(Long.valueOf(id));
     }
     
 }

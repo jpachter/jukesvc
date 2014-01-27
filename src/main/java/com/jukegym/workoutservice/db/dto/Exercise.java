@@ -79,14 +79,18 @@ public class Exercise {
 			this.muscleGroups = new HashSet<MuscleGroup>();
 		this.muscleGroups.add(muscleGroup);
 	}
+	
+	public boolean removeMuscleGroup(MuscleGroup muscleGroup){
+		if(this.muscleGroups == null)
+			return false;
+		
+		return this.muscleGroups.remove(muscleGroup);
+	}
 
 	public void setMuscleGroups(Set<MuscleGroup> muscleGroups) {
 		this.muscleGroups = muscleGroups;
 	}
 
-	
-	
-	
 	public Set<Muscle> getPrimaryMuscles() {
 		return primaryMuscles;
 	}
@@ -95,6 +99,13 @@ public class Exercise {
 		if(this.primaryMuscles == null)
 			this.primaryMuscles = new HashSet<Muscle>();
 		this.primaryMuscles.add(muscle);
+	}
+	
+	public boolean removePrimaryMuscle(Muscle muscle){
+		if(this.primaryMuscles == null)
+			return false;
+		
+		return this.primaryMuscles.remove(muscle);
 	}
 
 	public void setPrimaryMuscles(Set<Muscle> muscles) {
@@ -109,6 +120,13 @@ public class Exercise {
 		if(this.secondaryMuscles == null)
 			this.secondaryMuscles = new HashSet<Muscle>();
 		this.secondaryMuscles.add(muscle);
+	}
+	
+	public boolean removeSecondaryMuscle(Muscle muscle){
+		if(this.secondaryMuscles == null)
+			return false;
+		
+		return this.secondaryMuscles.remove(muscle);
 	}
 
 	public void setSecondaryMuscles(Set<Muscle> secondaryMuscles) {
