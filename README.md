@@ -23,7 +23,7 @@ Copyright (C) 2010-2012 Google Inc.
     GET     /musclegroups/{id}   - Retrieves a specific muscle group
     DELETE  /musclegroups/{id}   - Deletes a muscle group			   
 							   
-    GET     /muscles             - Retrieves a list of muscls
+    GET     /muscles             - Retrieves a list of muscles
     POST    /muscles             - Creates a new muscle
 							           FormParam: name (String)
     GET     /muscles/{id}   	 - Retrieves a specific muscle

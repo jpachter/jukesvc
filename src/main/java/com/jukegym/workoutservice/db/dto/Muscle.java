@@ -4,11 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
@@ -21,7 +19,7 @@ import com.jukegym.workoutservice.db.model.MuscleEnum;
     @NamedQuery(name="Muscle.findAll",
                 query="SELECT m FROM Muscle m"),
     @NamedQuery(name="Muscle.findByName",
-                query="SELECT m FROM Muscle m WHERE m.name = :name"),
+                query="SELECT m FROM Muscle m WHERE LOWER(m.name) = LOWER(:name)"),
 }) 
 public class Muscle {
 	@Id  

@@ -7,15 +7,12 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.datanucleus.annotations.Unowned;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity  
@@ -24,6 +21,8 @@ import javax.persistence.Transient;
                 query="SELECT e FROM Exercise e"),
     @NamedQuery(name="Exercise.findByMuscleGroup",
                 query="SELECT e FROM Exercise e WHERE e.muscleGroup in :muscleGroups"),
+     @NamedQuery(name="Exercise.findByName",
+                query="SELECT e FROM Exercise e WHERE LOWER(e.name) = LOWER(:name)"),
 }) 
 public class Exercise {
 	@Id  
@@ -106,6 +105,18 @@ public class Exercise {
 			return false;
 		
 		return this.primaryMuscles.remove(muscle);
+	}
+	
+	public boolean hasPrimaryMuscle(Muscle muscle){
+		return this.primaryMuscles.contains(muscle);
+	}
+	
+	public boolean hasSecondaryMuscle(Muscle muscle){
+		return this.secondaryMuscles.contains(muscle);
+	}
+	
+	public boolean hasMuscleGroup(MuscleGroup mg){
+		return this.muscleGroups.contains(mg);
 	}
 
 	public void setPrimaryMuscles(Set<Muscle> muscles) {

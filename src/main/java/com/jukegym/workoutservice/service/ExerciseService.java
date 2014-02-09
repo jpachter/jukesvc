@@ -1,6 +1,5 @@
 package com.jukegym.workoutservice.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -12,8 +11,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 import com.jukegym.workoutservice.db.dao.ExerciseDaoImp;
 import com.jukegym.workoutservice.db.dto.Exercise;
 

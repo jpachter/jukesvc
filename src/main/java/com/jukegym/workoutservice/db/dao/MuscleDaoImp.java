@@ -10,7 +10,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.jukegym.workoutservice.EMF;
-import com.jukegym.workoutservice.db.dto.Exercise;
 import com.jukegym.workoutservice.db.dto.Muscle;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
 
@@ -56,8 +55,15 @@ public class MuscleDaoImp implements MuscleDaoInterface{
 	}
 	
 	public MuscleGroup createMuscleGroup(String name){
-		EntityManager em = EMF.get().createEntityManager();
-		MuscleGroup mg = new MuscleGroup();
+		MuscleGroup mg = getMuscleGroupByName(name);
+		EntityManager em;
+		
+		if(mg != null)
+			return mg;
+		
+		em = EMF.get().createEntityManager();
+		mg = new MuscleGroup();
+		
 		try {
 			mg.setName(name);
 		} catch (Exception e) {
@@ -119,8 +125,15 @@ public class MuscleDaoImp implements MuscleDaoInterface{
 
 	@Override
 	public Muscle createMuscle(String name) {
-		EntityManager em = EMF.get().createEntityManager();
-		Muscle muscle = new Muscle();
+		Muscle muscle = getMuscleByName(name);
+		EntityManager em;
+		
+		if(muscle != null)
+			return muscle;
+		
+		em = EMF.get().createEntityManager();
+		muscle = new Muscle();
+		
 		try {
 			muscle.setName(name);
 		} catch (Exception e) {

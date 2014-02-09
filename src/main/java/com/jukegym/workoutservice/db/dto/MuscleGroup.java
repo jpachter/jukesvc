@@ -7,11 +7,9 @@ import com.google.appengine.api.datastore.Key;
 import com.jukegym.workoutservice.db.model.MuscleGroupEnum;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
@@ -21,7 +19,7 @@ import javax.persistence.Transient;
     @NamedQuery(name="MuscleGroup.findAll",
                 query="SELECT mg FROM MuscleGroup mg"),
     @NamedQuery(name="MuscleGroup.findByName",
-                query="SELECT mg FROM MuscleGroup mg WHERE mg.name = :name"),
+                query="SELECT mg FROM MuscleGroup mg WHERE LOWER(mg.name) = LOWER(:name)"),
 }) 
 public class MuscleGroup {
 	@Id  

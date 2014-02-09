@@ -17,4 +17,5 @@ public interface ExerciseDaoInterface {
 	public Exercise removeMuscleGroupFromExercise(long exerciseId, long muscleGroupId);
 	public Exercise removePrimaryMuscleFromExercise(long exerciseId, long primaryMuscleId);
 	public Exercise removeSecondaryMuscleFromExercise(long exerciseId, long secondaryMuscleId);
+	public Exercise getExerciseByName(String name);
 }

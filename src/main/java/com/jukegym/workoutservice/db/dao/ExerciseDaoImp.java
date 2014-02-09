@@ -21,8 +21,14 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 	}
 
 	public Exercise addExercise(String name){
-		EntityManager em = EMF.get().createEntityManager();
-		Exercise e = new Exercise();
+		Exercise e = getExerciseByName(name);
+		EntityManager em;
+		
+		if(e != null)
+			return e;
+		
+		em = EMF.get().createEntityManager();
+		e = new Exercise();
 		e.setName(name);	
 		
 		try {
@@ -87,6 +93,9 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 			e.addError("Error: Unable to find muscle group id #(" + muscleGroupId + ").");
 		}
 		
+		if(e.hasMuscleGroup(mg))
+			e.addError("Error: Exercise already has muscle group id #(" + muscleGroupId + ").");
+		
 		if(e.getError() != null && e.getError().size() > 0)
 			return e;
 		
@@ -143,6 +152,9 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 			e.addError("Error: Unable to find muscle id #(" + primaryMuscleId + ").");
 		}
 		
+		if(e.hasPrimaryMuscle(muscle))
+			e.addError("Error: Exercise already has primary muscle id #(" + primaryMuscleId + ").");
+		
 		if(e.getError() != null && e.getError().size() > 0)
 			return e;
 		
@@ -176,6 +188,9 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 		if(muscle == null){
 			e.addError("Error: Unable to find muscle id #(" + secondaryMuscleId + ").");
 		}
+		
+		if(e.hasSecondaryMuscle(muscle))
+			e.addError("Error: Exercise already has secondary muscle id #(" + secondaryMuscleId + ").");
 		
 		if(e.getError() != null && e.getError().size() > 0)
 			return e;
@@ -262,6 +277,7 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
 		
 	}
 
+	
 	@Override
 	public Exercise removePrimaryMuscleFromExercise(long exerciseId, long primaryMuscleId){
 		EntityManager em = EMF.get().createEntityManager();
@@ -341,6 +357,26 @@ public class ExerciseDaoImp implements ExerciseDaoInterface{
         	em.close();
         }
 	}
+	
+	@Override
+	public Exercise getExerciseByName(String name) {
+		EntityManager em = EMF.get().createEntityManager();
+		Exercise result = null;
+		
+		try {
+			TypedQuery<Exercise> query =
+				      em.createNamedQuery("Exercise.findByName", Exercise.class);
+			query.setParameter("name", name);
+			result = query.getSingleResult();
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+         } finally {
+        	em.close();
+        }
+
+		return result;
+	}	
 
 
 	
