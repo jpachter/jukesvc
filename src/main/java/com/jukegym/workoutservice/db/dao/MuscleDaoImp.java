@@ -6,6 +6,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import com.jukegym.workoutservice.EMF;
@@ -190,5 +191,48 @@ public class MuscleDaoImp implements MuscleDaoInterface{
          } finally {
         	em.close();
         }
+	}
+
+	@Override
+	public MuscleGroup getMuscleGroupByName(String name) {
+		EntityManager em = EMF.get().createEntityManager();
+		MuscleGroup result = null;
+		
+		try {
+			TypedQuery<MuscleGroup> query =
+				      em.createNamedQuery("MuscleGroup.findByName", MuscleGroup.class);
+			query.setParameter("name", name);
+			result = query.getSingleResult();
+        }
+		catch(NoResultException ex){
+			
+		}
+		catch(Exception ex){     
+			ex.printStackTrace();
+         } finally {
+        	em.close();
+        }
+
+		return result;
+	}
+
+	@Override
+	public Muscle getMuscleByName(String name) {
+		EntityManager em = EMF.get().createEntityManager();
+		Muscle result = null;
+		
+		try {
+			TypedQuery<Muscle> query =
+				      em.createNamedQuery("MuscleGroup.findByName", Muscle.class);
+			query.setParameter("name", name);
+			result = query.getSingleResult();
+        }
+		catch(Exception ex){     
+			ex.printStackTrace();
+         } finally {
+        	em.close();
+        }
+
+		return result;
 	}	
 }

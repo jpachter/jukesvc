@@ -20,6 +20,8 @@ import com.jukegym.workoutservice.db.model.MuscleEnum;
 @NamedQueries({
     @NamedQuery(name="Muscle.findAll",
                 query="SELECT m FROM Muscle m"),
+    @NamedQuery(name="Muscle.findByName",
+                query="SELECT m FROM Muscle m WHERE m.name = :name"),
 }) 
 public class Muscle {
 	@Id  

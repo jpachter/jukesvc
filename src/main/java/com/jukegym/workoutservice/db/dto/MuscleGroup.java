@@ -20,6 +20,8 @@ import javax.persistence.Transient;
 @NamedQueries({
     @NamedQuery(name="MuscleGroup.findAll",
                 query="SELECT mg FROM MuscleGroup mg"),
+    @NamedQuery(name="MuscleGroup.findByName",
+                query="SELECT mg FROM MuscleGroup mg WHERE mg.name = :name"),
 }) 
 public class MuscleGroup {
 	@Id  
