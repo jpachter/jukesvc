@@ -13,12 +13,14 @@ import javax.ws.rs.core.MediaType;
 
 import com.jukegym.workoutservice.db.dao.ExerciseDaoImp;
 import com.jukegym.workoutservice.db.dto.Exercise;
+import com.jukegym.workoutservice.security.CORSBinding;
 
 
 @Path("/exercises")
 public class ExerciseService {
 
     @POST
+    @CORSBinding
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addExercise(@FormParam("name") String name){
     	ExerciseDaoImp dao = new ExerciseDaoImp();
@@ -26,6 +28,7 @@ public class ExerciseService {
     }
     
     @GET
+    @CORSBinding
     @Produces(MediaType.APPLICATION_JSON)
     public List<Exercise> getAllExercises() {
     	ExerciseDaoImp dao = new ExerciseDaoImp();
@@ -33,6 +36,7 @@ public class ExerciseService {
     }
 
     @GET
+    @CORSBinding
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Exercise getExerciseById(@PathParam("id") String id){
@@ -41,6 +45,7 @@ public class ExerciseService {
     }
     
     @DELETE
+    @CORSBinding
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Exercise deleteExerciseById(@PathParam("id") String id){
@@ -49,6 +54,7 @@ public class ExerciseService {
     }
     
     @POST
+    @CORSBinding
     @Path("/{id}/musclegroups")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addMuscleGroup(@FormParam("mgid") String muscleGroupId,
@@ -58,6 +64,7 @@ public class ExerciseService {
     }
     
     @POST
+    @CORSBinding
     @Path("/{id}/primarymuscles")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addPrimaryMuscle(@FormParam("pid") String primaryMuscleId,
@@ -67,6 +74,7 @@ public class ExerciseService {
     }
     
     @POST
+    @CORSBinding
     @Path("/{id}/secondarymuscles")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise addSecondaryMuscle(@FormParam("sid") String secondaryMuscleId,
@@ -76,6 +84,7 @@ public class ExerciseService {
     }
     
     @DELETE
+    @CORSBinding
     @Path("/{id}/musclegroups/{mid}")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise removeMuscleGroup(@PathParam("mid") String muscleGroupId,
@@ -85,6 +94,7 @@ public class ExerciseService {
     }
     
     @DELETE
+    @CORSBinding
     @Path("/{id}/primarymuscles/{pid}")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise removePrimaryMuscle(@PathParam("pid") String primaryMuscleId,
@@ -94,6 +104,7 @@ public class ExerciseService {
     }
     
     @DELETE
+    @CORSBinding
     @Path("/{id}/secondarymuscles/{sid}")
     @Produces(MediaType.APPLICATION_JSON)
 	public Exercise removeSecondaryMuscle(@PathParam("sid") String secondaryMuscleId,

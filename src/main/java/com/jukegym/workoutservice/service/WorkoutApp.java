@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.ws.rs.core.Application;
 
+import com.jukegym.workoutservice.security.CrossDomainFilter;
+
 
 public class WorkoutApp extends Application {
      public Set<Class<?>> getClasses() {
@@ -12,6 +14,7 @@ public class WorkoutApp extends Application {
          s.add(ExerciseService.class);
          s.add(MuscleService.class);
          s.add(MuscleGroupService.class);
+         s.add(CrossDomainFilter.class);
          return s;
      }
 }

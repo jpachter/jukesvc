@@ -13,12 +13,14 @@ import javax.ws.rs.core.MediaType;
 
 import com.jukegym.workoutservice.db.dao.MuscleDaoImp;
 import com.jukegym.workoutservice.db.dto.MuscleGroup;
+import com.jukegym.workoutservice.security.CORSBinding;
 
 
 @Path("/musclegroups")
 public class MuscleGroupService {
     
     @GET
+    @CORSBinding
     @Produces(MediaType.APPLICATION_JSON)
     public List<MuscleGroup> getAllMuscleGroups() {
     	MuscleDaoImp dao = new MuscleDaoImp();
@@ -26,6 +28,7 @@ public class MuscleGroupService {
     }
     
     @POST
+    @CORSBinding
     @Produces(MediaType.APPLICATION_JSON)
     public MuscleGroup addMuscleGroup(@FormParam("name") String name) throws Exception {
     	MuscleDaoImp dao = new MuscleDaoImp();
@@ -33,6 +36,7 @@ public class MuscleGroupService {
     }
     
     @GET
+    @CORSBinding
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public MuscleGroup getMuscleGroupById(@PathParam("id") String id){
@@ -41,6 +45,7 @@ public class MuscleGroupService {
     }
     
     @DELETE
+    @CORSBinding
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public MuscleGroup deleteMuscleGroupById(@PathParam("id") String id){
